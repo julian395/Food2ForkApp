@@ -27,6 +27,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             rateControl.selectedSegmentIndex = 0
             self.indicator = "top rated"
             self.items.removeAll()
+            searchBar.endEditing(true)
             LoadData()
         }
         if rateControl.selectedSegmentIndex == 1
@@ -34,6 +35,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             rateControl.selectedSegmentIndex = 1
             self.indicator = "trending"
             self.items.removeAll()
+            searchBar.endEditing(true)
             LoadData()
         }
     }
@@ -139,8 +141,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     
     @IBAction func searchBtnAction(sender: AnyObject) {
+        searchBar.endEditing(true)
         if (searchBar.hidden)
         {
+            
             searchBar.hidden = false
             rateControl.hidden = true
             searchShow.setImage(UIImage(named: "star"), forState: UIControlState.Normal)
@@ -176,6 +180,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
+    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+        searchBar.endEditing(true)
+    }
         
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
             let cell = tableView.dequeueReusableCellWithIdentifier("CELLA")
