@@ -58,12 +58,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                         })
                     }
                 }
-                if items.count == 0
-                {
-                    let searchError = UIAlertView(title: "Message", message: "Nothing found", delegate: self, cancelButtonTitle: "Close")
-                    searchError.show()
-                    LoadData()
-                }
             }
             searchBar.resignFirstResponder()
     }
@@ -92,11 +86,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         if indexPath.row == lastElement {
             temp=temp+1
             if indicator == "top rated" {
-                var pageNum = "&sort=r&page=" + String(temp)
+                let pageNum = "&sort=r&page=" + String(temp)
                 RestApiManager.sharedInstance.getRecipesPage(pageNum)
             }
             if indicator == "trending" {
-                var pageNum = "&sort=t&page=" + String(temp)
+                let pageNum = "&sort=t&page=" + String(temp)
                 RestApiManager.sharedInstance.getRecipesPage(pageNum)
             }
             RestApiManager.sharedInstance.getSearchRequestByPage { (json: JSON) in
@@ -114,7 +108,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
    
     func LoadData() {
         if indicator == "top rated" {
-            var s = "&sort=r&page=1"
+            let s = "&sort=r&page=1"
             RestApiManager.sharedInstance.getRecipesPage(s)
             RestApiManager.sharedInstance.getSearchRequestByPage { (json: JSON) in
                 if let recipes = json["recipes"].array {
@@ -128,7 +122,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             }
         }
         if indicator == "trending" {
-            var s = "&sort=t&page=1"
+            let s = "&sort=t&page=1"
             RestApiManager.sharedInstance.getRecipesPage(s)
             RestApiManager.sharedInstance.getSearchRequestByPage { (json: JSON) in
                 if let recipes = json["recipes"].array {

@@ -34,7 +34,7 @@ class DetailViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     func addData() {
-        var idCode = "&rId=" + id!
+        let idCode = "&rId=" + id!
         RestApiManager.sharedInstance.getRecipeId(idCode)
         RestApiManager.sharedInstance.getDetailRequest { (json: JSON) in
             if let results = json["recipe"]["ingredients"].array{

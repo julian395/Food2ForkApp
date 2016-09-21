@@ -209,13 +209,16 @@
 					7F1395661D8EC0D6009714E3 = {
 						CreatedOnToolsVersion = 7.3;
 						DevelopmentTeam = 87A25Y7U57;
+						LastSwiftMigration = 0800;
 					};
 					7F13957A1D8EC0D6009714E3 = {
 						CreatedOnToolsVersion = 7.3;
+						LastSwiftMigration = 0800;
 						TestTargetID = 7F1395661D8EC0D6009714E3;
 					};
 					7F1395851D8EC0D6009714E3 = {
 						CreatedOnToolsVersion = 7.3;
+						LastSwiftMigration = 0800;
 						TestTargetID = 7F1395661D8EC0D6009714E3;
 					};
 				};
@@ -429,6 +432,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.juliankob.f2fApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 2.3;
 			};
 			name = Debug;
 		};
@@ -443,6 +447,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.juliankob.f2fApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 2.3;
 			};
 			name = Release;
 		};
@@ -454,6 +459,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.juliankob.f2fAppTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/f2fApp.app/f2fApp";
 			};
 			name = Debug;
@@ -466,6 +472,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.juliankob.f2fAppTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/f2fApp.app/f2fApp";
 			};
 			name = Release;
@@ -477,6 +484,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.juliankob.f2fAppUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 				TEST_TARGET_NAME = f2fApp;
 			};
 			name = Debug;
@@ -488,6 +496,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.juliankob.f2fAppUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 				TEST_TARGET_NAME = f2fApp;
 			};
 			name = Release;
@@ -511,6 +520,7 @@
 				7F1395911D8EC0D6009714E3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7F1395921D8EC0D6009714E3 /* Build configuration list for PBXNativeTarget "f2fAppTests" */ = {
 			isa = XCConfigurationList;
@@ -519,6 +529,7 @@
 				7F1395941D8EC0D6009714E3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7F1395951D8EC0D6009714E3 /* Build configuration list for PBXNativeTarget "f2fAppUITests" */ = {
 			isa = XCConfigurationList;
@@ -527,6 +538,7 @@
 				7F1395971D8EC0D6009714E3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
