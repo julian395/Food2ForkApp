@@ -19,6 +19,7 @@
 		7F1395A31D8EC61E009714E3 /* RecipeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1395A21D8EC61E009714E3 /* RecipeCell.swift */; };
 		7F1395A61D8F0CC6009714E3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F1395A41D8F0CC6009714E3 /* Main.storyboard */; };
 		7F1395A81D8F13F7009714E3 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1395A71D8F13F7009714E3 /* DetailViewController.swift */; };
+		7FFAA26F1D933974005DE6B3 /* iOSDevCenters+GIF.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FFAA26E1D933974005DE6B3 /* iOSDevCenters+GIF.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,7 @@
 		7F1395A21D8EC61E009714E3 /* RecipeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeCell.swift; sourceTree = "<group>"; };
 		7F1395A51D8F0CC6009714E3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		7F1395A71D8F13F7009714E3 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		7FFAA26E1D933974005DE6B3 /* iOSDevCenters+GIF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "iOSDevCenters+GIF.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +110,7 @@
 			isa = PBXGroup;
 			children = (
 				7F13959E1D8EC205009714E3 /* SwiftyJSON.swift */,
+				7FFAA26E1D933974005DE6B3 /* iOSDevCenters+GIF.swift */,
 				7F1395A21D8EC61E009714E3 /* RecipeCell.swift */,
 				7F1395981D8EC0E8009714E3 /* RecipeModel.swift */,
 				7F1395A41D8F0CC6009714E3 /* Main.storyboard */,
@@ -276,6 +279,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7F13956D1D8EC0D6009714E3 /* ViewController.swift in Sources */,
+				7FFAA26F1D933974005DE6B3 /* iOSDevCenters+GIF.swift in Sources */,
 				7F13956B1D8EC0D6009714E3 /* AppDelegate.swift in Sources */,
 				7F13959D1D8EC183009714E3 /* RestApiManager.swift in Sources */,
 				7F1395A31D8EC61E009714E3 /* RecipeCell.swift in Sources */,

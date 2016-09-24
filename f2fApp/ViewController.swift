@@ -1,6 +1,6 @@
 //
 //  ViewController.swift
-//  BookOfRecipes
+//  f2fApp
 //
 //  Created by Julian1 on 15.09.16.
 //  Copyright © 2016 juliankob.com. All rights reserved.
@@ -16,10 +16,13 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     @IBOutlet weak var rateControl: UISegmentedControl!
     @IBOutlet weak var searchShow: UIButton!
     @IBOutlet weak var searchBar: UISearchBar!
+    var refreshControl: UIRefreshControl!
     var titleText = ""
     var publisherText = ""
     var img: UIImage?
     var indicator: String? = "top rated"
+    var imageCache = [String:UIImage]()
+    var gifImg: UIImage?
 
     @IBAction func indexChanged(sender: UISegmentedControl) {
         if rateControl.selectedSegmentIndex == 0
@@ -27,6 +30,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             rateControl.selectedSegmentIndex = 0
             self.indicator = "top rated"
             self.items.removeAll()
+            self.tableView.reloadData()
             searchBar.endEditing(true)
             LoadData()
         }
@@ -35,33 +39,32 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             rateControl.selectedSegmentIndex = 1
             self.indicator = "trending"
             self.items.removeAll()
+            self.tableView.reloadData()
             searchBar.endEditing(true)
             LoadData()
         }
     }
     func searchBarSearchButtonClicked( searchBar: UISearchBar!) {
         self.items.removeAll()
+        self.tableView.reloadData()
         let searchText = "&q=" + (searchBar.text?.removeWhitespace())!
-        if (searchBar.text == "")
-            {
-                let searchError = UIAlertView(title: "Error", message: "Try to enter some text", delegate: self, cancelButtonTitle: "Close")
-                searchError.show()
-            }
-            else
-            {
-                RestApiManager.sharedInstance.getRecipesPage(searchText)
-                RestApiManager.sharedInstance.getSearchRequestByPage { (json: JSON) in
-                    if let recipes = json["recipes"].array {
-                        for entry in recipes {
-                            self.items.append(RecipeModel(json: entry))
-                        }
-                        dispatch_async(dispatch_get_main_queue(),{
-                            self.tableView.reloadData()
-                        })
-                    }
+        RestApiManager.sharedInstance.getRecipesPage(searchText)
+        RestApiManager.sharedInstance.getSearchRequestByPage { (json: JSON) in
+            if let recipes = json["recipes"].array {
+                for entry in recipes {
+                    self.items.append(RecipeModel(json: entry))
                 }
+                dispatch_async(dispatch_get_main_queue(),{
+                    self.tableView.reloadData()
+                })
             }
-            searchBar.resignFirstResponder()
+        }
+        searchBar.resignFirstResponder()
+        if items.count < 1
+        {
+            let searchError = UIAlertView(title: "Search", message: "Nothing found", delegate: self, cancelButtonTitle: "Close")
+            searchError.show()
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -73,16 +76,33 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }
         LoadData()
         self.navigationController?.navigationBarHidden = true
+        if gifImg == nil
+        {
+            let gifURL : String = "https://s3.amazonaws.com/leadflow/assets/load.gif"
+            gifImg = UIImage.gifImageWithURL(gifURL)
+        }
     }
     
     override func viewWillDisappear(animated: Bool) {
         self.navigationController?.navigationBarHidden = false
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         searchBar.delegate = self
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl.attributedTitle = NSAttributedString(string: "Reloading data")
+        self.refreshControl.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
+        self.tableView.addSubview(refreshControl)
     }
-
+    func refresh(sender:UIRefreshControl){
+        self.tableView.reloadData()
+        let time = dispatch_time(dispatch_time_t(DISPATCH_TIME_NOW), 1 * Int64(NSEC_PER_SEC))
+        dispatch_after(time, dispatch_get_main_queue()) {
+            self.refreshControl.endRefreshing()
+        }
+    }
+    
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         let lastElement = items.count - 1
         if indexPath.row == lastElement {
@@ -183,16 +203,31 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     func scrollViewWillBeginDragging(scrollView: UIScrollView) {
         searchBar.endEditing(true)
     }
-        
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-            let cell = tableView.dequeueReusableCellWithIdentifier("CELLA")
-        
+        let cell = tableView.dequeueReusableCellWithIdentifier("CELLA")
             if let recipeCell = cell as? RecipeCell {
                 let recipe = self.items[indexPath.row]
                 if let imgUrl = NSURL(string: recipe.imgUrl) {
-                    if let data = NSData(contentsOfURL: imgUrl) {
-                        recipeCell.recipeImg!.image = UIImage(data: data)
-                        img = recipeCell.recipeImg!.image
+                    recipeCell.recipeImg.image = gifImg
+                    if let img = imageCache[recipe.imgUrl] {
+                        recipeCell.recipeImg!.image = img
+                    }
+                    else {
+                    let request: NSURLRequest = NSURLRequest(URL: imgUrl)
+                    let mainQueue = NSOperationQueue.mainQueue()
+                    NSURLConnection.sendAsynchronousRequest(request, queue: mainQueue, completionHandler: { (response, data, error) -> Void in
+                        if error == nil {
+                            let image = UIImage(data: data!)
+                            self.imageCache[recipe.imgUrl] = image
+                            dispatch_async(dispatch_get_main_queue(), {
+                               tableView.reloadData()
+                            })
+                        }
+                        else {
+                            print("Error: \(error!.localizedDescription)")
+                        }
+                    })
                     }
                 }
                 recipeCell.title.text = recipe.title
@@ -213,6 +248,3 @@ extension String {
         return self.replace(" ", replacement: "&")
     }
 }
-
-
-
