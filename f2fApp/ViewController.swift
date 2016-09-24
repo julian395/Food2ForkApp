@@ -33,6 +33,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             self.tableView.reloadData()
             searchBar.endEditing(true)
             LoadData()
+            temp = 1
         }
         if rateControl.selectedSegmentIndex == 1
         {
@@ -42,6 +43,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             self.tableView.reloadData()
             searchBar.endEditing(true)
             LoadData()
+            temp = 1
         }
     }
     func searchBarSearchButtonClicked( searchBar: UISearchBar!) {
@@ -60,11 +62,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             }
         }
         searchBar.resignFirstResponder()
-        if items.count < 1
-        {
-            let searchError = UIAlertView(title: "Search", message: "Nothing found", delegate: self, cancelButtonTitle: "Close")
-            searchError.show()
-        }
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -129,6 +126,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
    
     func LoadData() {
+        temp = 1
         if indicator == "top rated" {
             let s = "&sort=r&page=1"
             RestApiManager.sharedInstance.getRecipesPage(s)
@@ -164,16 +162,20 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         searchBar.endEditing(true)
         if (searchBar.hidden)
         {
-            
+            searchBar.becomeFirstResponder()
             searchBar.hidden = false
             rateControl.hidden = true
             searchShow.setImage(UIImage(named: "star"), forState: UIControlState.Normal)
         }
         else
         {
+            searchBar.resignFirstResponder()
             searchBar.hidden = true
             rateControl.hidden = false
             searchShow.setImage(UIImage(named: "search"), forState: UIControlState.Normal)
+            items.removeAll()
+            LoadData()
+            self.tableView.reloadData()
         }
     }
     
